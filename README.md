@@ -1,5 +1,9 @@
 
 
+https://github.com/user-attachments/assets/2cffb8b6-c24a-47bc-81fe-976205c28094
+
+
+
 🗂️ Jira Aging Analyzer: 리소스 정체 구간 분석 대시보드 🗂️
 > "데이터를 통해 프로젝트의 병목을 선제적으로 발견하고 의사결정을 지원합니다."
 
