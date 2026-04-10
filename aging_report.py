@@ -69,6 +69,26 @@ def get_aging_data(project_key):
         })
     return pd.DataFrame(data)
 
+
+# ==========================================
+# 2. 실제 데이터 말고 더미데이터용
+# ==========================================
+
+def get_mock_data():
+    mock_list = [
+        {"업무유형": "버그", "티켓번호": "DEMO-101", "요약": "[결제] 특정 환경에서 결제 버튼 미노출 현상", "담당자": "데브_강대리", "현재상태": "대기", "정체기간(일)": 15, "기한": "2026-04-01", "지연여부": "지연 됨 ❌", "링크": "#"},
+        {"업무유형": "작업", "티켓번호": "DEMO-102", "요약": "[UI/UX] 메인 페이지 배너 리뉴얼 작업", "담당자": "디자인_이주임", "현재상태": "진행 중", "정체기간(일)": 7, "기한": "2026-04-15", "지연여부": "정상", "링크": "#"},
+        {"업무유형": "개선", "티켓번호": "DEMO-103", "요약": "[서버] API 응답 속도 최적화 및 쿼리 튜닝", "담당자": "백엔드_박팀장", "현재상태": "확인/수정 중", "정체기간(일)": 5, "기한": "누락 🚨", "지연여부": "-", "링크": "#"},
+        {"업무유형": "에픽", "티켓번호": "DEMO-104", "요약": "[신규] 2분기 시즌 패스 시스템 기획 및 설계", "담당자": "기획_김사원", "현재상태": "접수 대기", "정체기간(일)": 3, "기한": "2026-05-20", "지연여부": "정상", "링크": "#"},
+        {"업무유형": "버그", "티켓번호": "DEMO-105", "요약": "[AOS] 특정 단말기에서 앱 무한 로딩 발생", "담당자": "모바일_최주임", "현재상태": "대기", "정체기간(일)": 12, "기한": "2026-03-31", "지연여부": "지연 됨 ❌", "링크": "#"},
+        {"업무유형": "하위 작업", "티켓번호": "DEMO-106", "요약": "상점 아이템 아이콘 리소스 제작", "담당자": "아트_정대리", "현재상태": "진행 중", "정체기간(일)": 8, "기한": "2026-04-10", "지연여부": "지연 됨 ❌", "링크": "#"},
+        {"업무유형": "작업", "티켓번호": "DEMO-107", "요약": "[인프라] DB 서버 스토리지 증설 작업", "담당자": "인프라_홍팀장", "현재상태": "확인/수정 중", "정체기간(일)": 4, "기한": "누락 🚨", "지연여부": "-", "링크": "#"},
+        {"업무유형": "개선", "티켓번호": "DEMO-108", "요약": "[웹] 커뮤니티 게시판 검색 기능 고도화", "담당자": "풀스택_박사원", "현재상태": "진행 예정", "정체기간(일)": 6, "기한": "2026-04-30", "지연여부": "정상", "링크": "#"},
+        {"업무유형": "버그", "티켓번호": "DEMO-109", "요약": "[iOS] 푸시 알림 간헐적 미발송 건 확인", "담당자": "모바일_최주임", "현재상태": "대기", "정체기간(일)": 10, "기한": "2026-04-05", "지연여부": "지연 됨 ❌", "링크": "#"},
+        {"업무유형": "작업", "티켓번호": "DEMO-110", "요약": "[기획] 랭킹 시스템 밸런스 조정안 수립", "담당자": "기획_김사원", "현재상태": "진행 중", "정체기간(일)": 2, "기한": "2026-05-01", "지연여부": "정상", "링크": "#"}
+    ]
+    return pd.DataFrame(mock_list)
+
 # ==========================================
 # 2. 팝업(Dialog) 함수 (Top 10 상세 보기용)
 # ==========================================
@@ -100,11 +120,22 @@ with st.sidebar:
     st.markdown("<h2 style='color: #1E293B;'>Project Manager <span style='font-size:12px; color:#7C3AED;'>TOOLS</span></h2>", unsafe_allow_html=True)
     st.caption("리소스 리스크 관제탑")
     st.divider()
-    st.markdown("**👤 PM 포트폴리오**")
-    st.caption("© 2026 SOOP PM")
+    st.markdown("**🍔 PM 화이팅**")
+    st.caption("© 2026 mas")
 
 st.markdown("### 🗂️ 리소스 정체 구간(Aging) 분석 대시보드")
-raw_df = get_aging_data(TARGET_PROJECT)
+
+
+# 사이드바 하단에 데모 모드 스위치 배치
+with st.sidebar:
+    st.divider()
+    is_demo = st.checkbox("데모 모드 실행 (데이터 마스킹)", value=False, help="보안을 위해 실제 Jira 데이터 대신 가짜 데이터를 사용합니다.")
+
+# [핵심] 스위치 상태에 따라 데이터 소스 결정
+if is_demo:
+    raw_df = get_mock_data()  # 체크박스 켜지면 가짜 데이터 로드
+else:
+    raw_df = get_aging_data(TARGET_PROJECT)  # 체크박스 꺼지면 진짜 Jira 데이터 로드
 
 if not raw_df.empty:
     with st.container(border=True):
@@ -182,14 +213,14 @@ if not raw_df.empty:
         overdue_df = raw_df[raw_df["지연여부"] == "지연 됨 ❌"]
 
         with st.container(border=True):
-            st.markdown("### ❓ 기한(Due Date) 누락 작업")
+            st.markdown("### 기한 누락 작업")
             if missing_dates_df.empty: st.success("누락된 티켓이 없습니다!")
             else: st.dataframe(missing_dates_df[["티켓번호", "요약", "담당자", "링크"]], column_config={"요약": st.column_config.TextColumn("작업 요약", width="large"), "링크": st.column_config.LinkColumn("Jira", display_text="열기")}, use_container_width=True, hide_index=True)
             
         st.write("")
         
         with st.container(border=True):
-            st.markdown("### ⏰ 기한(Due Date) 지연 작업")
+            st.markdown("### 기한 지연 작업")
             if overdue_df.empty: st.success("지연된 티켓이 없습니다!")
             else: st.dataframe(overdue_df[["티켓번호", "요약", "담당자", "기한", "링크"]], column_config={"요약": st.column_config.TextColumn("작업 요약", width="large"), "링크": st.column_config.LinkColumn("Jira", display_text="열기")}, use_container_width=True, hide_index=True)
 
