@@ -35,32 +35,24 @@
 ## 4. 설치 및 실행 방법 (Installation & Run)
 본 프로젝트를 로컬 환경에서 실행하기 위한 단계별 안내입니다.
 
-① 저장소 클론 (Clone)
-먼저 터미널에서 프로젝트를 다운로드합니다.
+Repository Clone
 
 Bash
 git clone https://github.com/[본인-아이디]/Jira-Aging-Analyzer.git
 cd Jira-Aging-Analyzer
-② 라이브러리 설치 (Install Dependencies)
-프로젝트 실행에 필요한 파이썬 라이브러리를 설치합니다.
+필수 라이브러리 설치
 
 Bash
-pip install -r requirements.txt
-③ 환경 변수 설정 (Configuration)
-프로젝트 루트 폴더에 .streamlit 폴더를 생성하고 secrets.toml 파일을 만듭니다. (이 파일은 .gitignore에 의해 보호됩니다.)
-
-Bash
-mkdir .streamlit
-# 이후 메모장이나 VS Code로 .streamlit/secrets.toml 파일 생성
-secrets.toml 파일 안에 아래 정보를 입력합니다.
+pip install streamlit pandas jira-python plotly
+환경 설정 (Secrets)
+.streamlit/secrets.toml 파일을 생성하고 아래 정보를 입력합니다. (해당 파일은 보안을 위해 .gitignore에 등록되어 있습니다.)
 
 Ini, TOML
-JIRA_EMAIL = "본인의 지라 계정 이메일"
-JIRA_TOKEN = "지라에서 발급받은 API 토큰"
-JIRA_SERVER = "https://[회사도메인].atlassian.net/"
-TARGET_PROJECT = "프로젝트 코드 (예: SOOPKR)"
-④ 대시보드 실행 (Run)
-아래 명령어를 입력하면 로컬 웹 서버가 실행되며 브라우저에서 대시보드가 열립니다.
+JIRA_EMAIL = "your-email@example.com"
+JIRA_TOKEN = "your-jira-api-token"
+JIRA_SERVER = "https://your-domain.atlassian.net/"
+TARGET_PROJECT = "YOUR_PROJECT_KEY"
+대시보드 실행
 
 Bash
 streamlit run aging_report.py
