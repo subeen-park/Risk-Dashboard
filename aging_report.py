@@ -8,12 +8,12 @@ import time
 # ==========================================
 # 0. 페이지 설정 및 초기 로딩
 # ==========================================
-st.set_page_config(page_title="리소스 리스크 관제탑", page_icon="🎯", layout="wide")
+st.set_page_config(page_title="리소스 리스크 관제탑", page_icon="💭", layout="wide")
 
 if 'loaded' not in st.session_state:
     loading_placeholder = st.empty()
     with loading_placeholder.container():
-        st.markdown("<br><br><br><br><br><h2 style='text-align: center; color: #7C3AED;'>Jira 데이터 동기화 중... 🚀</h2>", unsafe_allow_html=True)
+        st.markdown("<br><br><br><br><br><h2 style='text-align: center; color: #7C3AED;'>Jira 데이터 동기화 중...</h2>", unsafe_allow_html=True)
         progress_bar = st.progress(0)
         for percent_complete in range(100):
             time.sleep(0.01) 
@@ -24,8 +24,8 @@ if 'loaded' not in st.session_state:
 # ==========================================
 # 1. 설정 및 데이터 추출 (✨ 가장 안정적인 엔진으로 롤백!)
 # ==========================================
-JIRA_SERVER = 'https://soop-global.atlassian.net/'
-TARGET_PROJECT = 'SOOPKR'
+JIRA_SERVER = st.secrets["JIRA_SERVER"]
+TARGET_PROJECT = st.secrets["TARGET_PROJECT"]
 
 @st.cache_resource
 def init_jira():
