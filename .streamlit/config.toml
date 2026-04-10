@@ -1,0 +1,15 @@
+[theme]
+# 스크린샷에 있는 예쁜 보라색 포인트 컬러
+primaryColor = "#7C3AED" 
+
+# 전체 배경은 아주 옅은 회색(거의 흰색)으로 깔끔하게
+backgroundColor = "#F8FAFC" 
+
+# 카드나 사이드바 배경은 완전한 흰색으로 분리감 주기
+secondaryBackgroundColor = "#FFFFFF" 
+
+# 글씨 색은 완전 검정이 아닌 세련된 진회색
+textColor = "#1E293B" 
+
+# 폰트는 깔끔한 고딕 계열 (sans serif)
+font = "sans serif"
