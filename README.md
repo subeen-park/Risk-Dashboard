@@ -32,30 +32,32 @@
 * **Optimization:** Streamlit Cache (TTL 600s) 적용으로 대용량 데이터 조회 속도 최적화
 
 
-## 4. 설치 및 실행 방법 (Installation & Run)
-본 프로젝트를 로컬 환경에서 실행하기 위한 단계별 안내입니다.
+## 4. 설치 및 실행 방법 (Installation)
 
-Repository Clone
+1. **Repository Clone**
+    ```bash
+    git clone [https://github.com/subeen-park/Jira-Aging-Analyzer.git](https://github.com/subeen-park/Jira-Aging-Analyzer.git)
+    cd Jira-Aging-Analyzer
+    ```
 
-Bash
-git clone https://github.com/[본인-아이디]/Jira-Aging-Analyzer.git
-cd Jira-Aging-Analyzer
-필수 라이브러리 설치
+2. **필수 라이브러리 설치**
+    ```bash
+    pip install streamlit pandas jira plotly
+    ```
 
-Bash
-pip install streamlit pandas jira-python plotly
-환경 설정 (Secrets)
-.streamlit/secrets.toml 파일을 생성하고 아래 정보를 입력합니다. (해당 파일은 보안을 위해 .gitignore에 등록되어 있습니다.)
+3. **환경 설정 (Secrets)**
+    `.streamlit/secrets.toml` 파일을 생성하고 아래 정보를 입력합니다. (해당 파일은 보안을 위해 `.gitignore`에 등록되어 있습니다.)
+    ```toml
+    JIRA_EMAIL = "your-email@example.com"
+    JIRA_TOKEN = "your-jira-api-token"
+    JIRA_SERVER = "[https://your-domain.atlassian.net/](https://your-domain.atlassian.net/)"
+    TARGET_PROJECT = "YOUR_PROJECT_KEY"
+    ```
 
-Ini, TOML
-JIRA_EMAIL = "your-email@example.com"
-JIRA_TOKEN = "your-jira-api-token"
-JIRA_SERVER = "https://your-domain.atlassian.net/"
-TARGET_PROJECT = "YOUR_PROJECT_KEY"
-대시보드 실행
-
-Bash
-streamlit run aging_report.py
+4. **대시보드 실행**
+    ```bash
+    streamlit run aging_report.py
+    ```
 
 
 💡 PM의 한마디 (Insight)
